@@ -1,37 +1,47 @@
-import React from 'react'
+//classComponent をインポート
+import React, { Component } from 'react'
 
-//proptypeをインポートする
-import PropTypes from 'prop-types'
+const App = () => ( <Counter></Counter> )
 
-const App = () => {
-  const profiles = [
-    {name: "TARO", age: 10},
-    {name: "HANAKO", age: 5},
-    {name: "Noname"}
-  ]
+//Counter クラスを呼び出しインスタンスが作成される
+class Counter extends Component {
+  //constructorメソッドを呼び出して初期化
+  constructor(prpos){
+    super(prpos)
+    //オブジェクトを作成する
+    this.state = {count: 0}
+  }
 
-  return (
-    <div>
-      {
-        profiles.map((profile, index)=> {
-          return <User name={profile.name}　age={profile.age} key={index}/>
-        })
-        
-      }
-    </div>
-  )
+  //handlePluseButton 関数
+  handlePluseButton = () => {
+    // console.log("クリック")
+    // const currentCount = this.state.count
+    // this.setState({count: currentCount +1 })
+    // console.log(this.state.count)
+
+    //状態更新する
+    //「this.state.count」 
+    //「this.state」はCounterComponentで管理しているSTATE
+    //「.count」はオブジェクト
+    this.setState({count: this.state.count +1 })
+  }
+  handleMinasuButton = () =>{
+    this.setState({count: this.state.count -1 })
+  }
+
+
+
+
+  //renderでdiv要素を描画する
+  render(){
+    return (
+      <React.Fragment>
+        <div>count: {this.state.count }</div>
+        <button onClick={this.handlePluseButton}>+1</button>
+        <button onClick={this.handleMinasuButton}>-1</button>
+      </React.Fragment>
+    )
+  }
 }
-const User =(props) => {
-  return <div>Hi Iam {props.name}, and {props.age} years old!!</div>
-}
-
-//propsの型を指定することで、異なる型が渡ってきたらエラーを返せるようにする
-User.propTypes = {
-  //name はstring型で受け取ることを指定する
-  name: PropTypes.string,
-  //ageという属性を受け取る事を必須にする
-  age:PropTypes.number.isRequired
-}
-
 
 export default App;
