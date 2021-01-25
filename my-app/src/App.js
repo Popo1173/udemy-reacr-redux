@@ -18,6 +18,7 @@ class Counter extends Component {
     // const currentCount = this.state.count
     // this.setState({count: currentCount +1 })
     // console.log(this.state.count)
+    //↓のようにリファクタリングできる
 
     //状態更新する
     //「this.state.count」 
