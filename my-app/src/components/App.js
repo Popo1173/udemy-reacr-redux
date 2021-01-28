@@ -1,48 +1,37 @@
 //classComponent をインポート
 import React, { Component } from 'react'
 
-const App = () => ( <Counter></Counter> )
+import { connect } from 'react-redux'
+
+import {increment, decrement } from '../actions'
 
 //Counter クラスを呼び出しインスタンスが作成される
-class Counter extends Component {
-  //constructorメソッドを呼び出して初期化
-  constructor(prpos){
-    super(prpos)
-    //オブジェクトを作成する
-    this.state = {count: 0}
-  }
-
-  //handlePluseButton 関数
-  handlePluseButton = () => {
-    // console.log("クリック")
-    // const currentCount = this.state.count
-    // this.setState({count: currentCount +1 })
-    // console.log(this.state.count)
-    //↓のようにリファクタリングできる
-
-    //状態更新する
-    //「this.state.count」 
-    //「this.state」はCounterComponentで管理しているSTATE
-    //「.count」はオブジェクト
-    this.setState({count: this.state.count +1 })
-  }
-  handleMinasuButton = () =>{
-    this.setState({count: this.state.count -1 })
-  }
-
-
-
+class App extends Component {
 
   //renderでdiv要素を描画する
   render(){
+    const props = this.props
+
     return (
       <React.Fragment>
-        <div>count: {this.state.count }</div>
-        <button onClick={this.handlePluseButton}>+1</button>
-        <button onClick={this.handleMinasuButton}>-1</button>
+        <div>count: {props.value }</div>
+        <button onClick={props.increment}>+1</button>
+        <button onClick={props.decrement}>-1</button>
       </React.Fragment>
     )
   }
 }
 
-export default App;
+//stateの情報からコンポーネントの必要なものを取り出してマッピングする
+const mapStateTopProps = state => ( {value: state.count.value} )
+
+//アクションが発生した時に、Reducerにタイプに応じた関数を実行させる
+// const mapDispatchToProps = dispatch => ({
+//   increment: () => dispatch(increment()),
+//   decrement: () => dispatch(decrement()),
+// })
+
+const mapDispatchToProps = ({ increment, decrement })
+
+export default connect(mapStateTopProps, mapDispatchToProps)(App)
+

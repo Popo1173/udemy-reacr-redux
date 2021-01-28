@@ -31,6 +31,6 @@ export const increment = () => ({
     type: INCREMENT
 })
 
-export const idecrement = () => ({
+export const decrement = () => ({
     type: DECREMENT
 })
