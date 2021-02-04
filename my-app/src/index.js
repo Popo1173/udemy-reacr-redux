@@ -1,25 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { createStore } from 'redux'
-//アプリケーションから
+//redux-thunkを使うため「applyMiddleware関数」をインポートする
+import { createStore, applyMiddleware } from 'redux'
+
 import { Provider } from 'react-redux'
- 
+
+import thunk from 'redux-thunk'
+
 import './index.css';
 //作成したReducerをインポートする
 import reducer from './reducers'
 
-import App from './components/App';
+import EventsIndex from './components/events_index';
 import reportWebVitals from './reportWebVitals';
 
 //全てのstateがstoreで集約される
-const store = createStore(reducer)
+const store = createStore(reducer, applyMiddleware(thunk))
 
 ReactDOM.render(
   //アプリケーション内の全階層のコンポーネントでstoreが利用可能になる。
   //providerを使うことで親から子へのpropsの受け渡しをしなくてすむ
   <Provider store={store}>
-    <App />
+    <EventsIndex />
   </Provider>,
   document.getElementById('root')
 );

@@ -1,36 +1,18 @@
+ //http clientのインポート
+import axios from 'axios'
 
-//Action Creatorsを作成し
-//viewを担当するcomponent側に渡すため「export」する
-// export const increment = () => {
-//     return
-//     {
-//         type: 'INCREMENT'
-//     }
-// }
-
-// export const idecrement = () => {
-//     return
-//     {
-//         type: 'DECREMENT'
-//     }
-// }
-
-//↑のreturn を↓のように省略してかける
-// export const increment = () => ({
-//         type: 'INCREMENT'
-// })
-// export const idecrement = () => ({
-//         type: 'DECREMENT'
-// })
+export const READ_EVENTS = 'READ_EVENTS'
 
 
-//Type内の識別子を複数で利用するため変数扱いできる
-export const INCREMENT = 'INCREMENT'
-export const DECREMENT = 'DECREMENT'
-export const increment = () => ({
-    type: INCREMENT
-})
+const ROOT_URL = 'https://udemy-utils.herokuapp.com/api/v1'
+const QUERYSTRING = '?token=token123'
 
-export const decrement = () => ({
-    type: DECREMENT
-})
+//外部のサーバにリクエストを投げる
+//readEventの中はピュアなオブジェクトしかはいらないが処理も入れるようにするのがredux-thunk
+//関数の中でdispacthできる
+export const readEvents = () => async dispatch => {
+    const response = await axios.get(`${ROOT_URL}/events${QUERYSTRING}`)
+    console.log(response)
+    dispatch({type: READ_EVENTS, response})
+}
+
